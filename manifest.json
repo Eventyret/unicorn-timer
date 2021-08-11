@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Unicorn Timer",
+  "version": "1.0.0",
+  "description": "A simple pomodoro timer",
+  "icons": {
+    "16": "assets/images/icon.png",
+    "48": "assets/images/icon.png",
+    "128": "assets/images/icon.png",
+    "256": "assets/images/icon.png",
+    "512": "assets/images/icon.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "assets/images/icon.png",
+      "24": "assets/images/icon.png",
+      "32": "assets/images/icon.png"
+    },
+    "default_title": "Timer Extension Action Title",
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html",
+  "permissions": ["storage"]
+}
