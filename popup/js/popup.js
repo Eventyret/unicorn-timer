@@ -1,6 +1,8 @@
 const addTaskRef = document.querySelector('#add-task');
 const taskContainerRef = document.querySelector('#task-container');
 const startTimerBtnRef = document.querySelector('#start-timer');
+const resetTimerBtnRef = document.querySelector('#reset-timer');
+const timeRef = document.querySelector('#time');
 
 let tasks = [];
 
@@ -23,6 +25,18 @@ startTimerBtnRef.addEventListener('click', () => {
       }
     );
   });
+});
+
+resetTimerBtnRef.addEventListener('click', () => {
+  chrome.storage.local.set(
+    {
+      timer: 0,
+      isRunning: false
+    },
+    () => {
+      startTimerBtnRef.textContent = 'Start Timer';
+    }
+  );
 });
 const renderTask = (taskNum) => {
   const taskRow = document.createElement('div');
@@ -71,3 +85,17 @@ const renderTasks = () => {
   taskContainerRef.textContent = '';
   tasks.forEach((taskText, taskNum) => renderTask(taskNum));
 };
+
+const updateTime = () => {
+  chrome.storage.local.get(['timer'], (res) => {
+    const minutes = 25 - Math.ceil(res.timer / 60);
+    let seconds = '00';
+    if (res.timer % 60 !== 0) {
+      seconds = 60 - (res.timer % 60);
+    }
+    timeRef.textContent = `${minutes}: ${seconds}`;
+  });
+};
+
+updateTime();
+setInterval(updateTime, 1000);
