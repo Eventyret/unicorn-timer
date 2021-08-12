@@ -1,19 +1,19 @@
-const timeElementRef = document.querySelector('#time');
-const nameElementRef = document.querySelector('#name');
-const currentTime = new Date().toLocaleTimeString();
+const timeRef = document.querySelector('#time');
+const nameRef = document.querySelector('#name');
+const timerRef = document.querySelector('#timer');
 
-timeElementRef.innerHTML = `The time is ${currentTime}`;
-
-chrome.action.setBadgeText(
-  {
-    text: 'TIME'
-  },
-  () => {
-    console.log('Finished settings badge text.');
-  }
-);
+function updateTimeElements() {
+  const currentTime = new Date().toLocaleTimeString();
+  chrome.storage.local.get(['timer'], (res) => {
+    const time = res.timer ?? 0;
+    timerRef.textContent = `The timer is at: ${time} seconds`;
+  });
+  timeRef.innerHTML = `The time is ${currentTime}`;
+}
+updateTimeElements();
+setInterval(updateTimeElements, 1000);
 
 chrome.storage.sync.get(['name'], (items) => {
   const name = items.name ?? 'Unknown';
-  nameElementRef.textContent = `Your name is ${name}`;
+  nameRef.textContent = `Your name is ${name}`;
 });
