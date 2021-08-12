@@ -1,7 +1,12 @@
 const addTaskRef = document.querySelector('#add-task');
 const taskContainerRef = document.querySelector('#task-container');
 
-const tasks = [];
+let tasks = [];
+
+chrome.storage.sync.get(['tasks'], (res) => {
+  tasks = res.tasks ? res.tasks : [];
+  renderTasks();
+});
 
 addTaskRef.addEventListener('click', () => addTask());
 
@@ -14,6 +19,7 @@ const renderTask = (taskNum) => {
 
   text.addEventListener('change', () => {
     tasks[taskNum] = text.value;
+    saveTasks();
   });
 
   const deleteBtn = document.createElement('input');
@@ -21,6 +27,7 @@ const renderTask = (taskNum) => {
   deleteBtn.value = 'X';
   deleteBtn.addEventListener('click', () => {
     deleteTask(taskNum);
+    saveTasks();
   });
   taskRow.appendChild(text);
   taskRow.appendChild(deleteBtn);
@@ -31,11 +38,19 @@ const addTask = () => {
   const taskNum = tasks.length;
   tasks.push('');
   renderTask(taskNum);
+  saveTasks();
 };
 
 const deleteTask = (taskNum) => {
   tasks.splice(taskNum, 1);
   renderTasks();
+  saveTasks();
+};
+
+const saveTasks = () => {
+  chrome.storage.sync.set({
+    tasks
+  });
 };
 
 const renderTasks = () => {
