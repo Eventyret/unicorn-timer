@@ -54,7 +54,7 @@ const renderTask = (taskNum) => {
   const deleteBtn = document.createElement('input');
   deleteBtn.type = 'button';
   deleteBtn.value = 'X';
-  deleteTask.className = 'task-delete';
+  deleteBtn.className = 'task-delete';
   deleteBtn.addEventListener('click', () => {
     deleteTask(taskNum);
     saveTasks();
