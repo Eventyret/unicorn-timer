@@ -7,8 +7,16 @@ chrome.alarms.onAlarm.addListener((alarm) => {
     chrome.storage.local.get(['timer', 'isRunning'], (res) => {
       if (res.isRunning) {
         let timer = res.timer + 1;
-        console.log(timer);
-        chrome.storage.local.set({ timer });
+        let isRunning = true;
+        if (timer === 60 * 25) {
+          this.register.showNotification('Unicorn Timer', {
+            body: '25 minutes have now passed!',
+            icon: 'assets/images/icon.png'
+          });
+          timer = 0;
+          isRunning = false;
+        }
+        chrome.storage.local.set({ timer, isRunning });
       }
     });
   }
