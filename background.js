@@ -5,11 +5,15 @@ chrome.alarms.onAlarm.addListener((alarm) => {
     const time = res.timer ?? 0;
     chrome.storage.local.set({ timer: time + 1 });
     chrome.action.setBadgeText({ text: `${time + 1}` });
-    if (time % 1000 === 0) {
-      this.registration.showNotification('Unicorn Timer', {
-        body: '1 second has passed',
-        icon: 'assets/images/icon.png'
-      });
-    }
+
+    chrome.storage.sync.get(['notificationTime'], (res) => {
+      const notificationTime = res.notificationTime ?? 1000;
+      if (time % notificationTime === 0) {
+        this.registration.showNotification('Unicorn Timer', {
+          body: '${notificationTime} second has passed',
+          icon: 'assets/images/icon.png'
+        });
+      }
+    });
   });
 });
