@@ -9,13 +9,11 @@
   </head>
   <body>
     <h1>🦄Unicorn pomodoro timer options</h1>
-    <input type="number" id="time-option" min="1" max="60" value="25" />
-    <input
-      id="time-input"
-      type="number"
-      placeholder="Notification time in seconds!"
-    />
+    <label for="time-option">
+      Default Time in Minutes (1 - 60):
+      <input type="number" id="time-option" min="1" max="60" value="25" />
+    </label>
     <button id="save-btn">Save Options</button>
-    <script src="assets/js/options.js"></script>
+    <script src="js/options.js"></script>
   </body>
 </html>

@@ -1,16 +1,21 @@
-const nameInputRef = document.querySelector('#name-input');
-const timeInputRef = document.querySelector('#time-input');
+const timeOptionRef = document.querySelector('#time-option');
 const saveBtnRef = document.querySelector('#save-btn');
 
-saveBtnRef.addEventListener('click', () => {
-  const name = nameInputRef.value;
-  const notificationTime = timeInputRef.value;
-  chrome.storage.sync.set({ name, notificationTime }, () => {
-    console.log(`Name is set to ${name}`);
+timeOptionRef.addEventListener('change', (event) => {
+  const val = event.target.value;
+  if (val < 1 || val > 60) {
+    timeOptionRef.value = 25;
+  }
+});
+
+saveBtnRef.addEventListener('click', (event) => {
+  chrome.storage.local.set({
+    timer: 0,
+    timeOption: timeOptionRef.value,
+    isRunning: false
   });
 });
 
-chrome.storage.sync.get(['name', 'notificationTime'], (item) => {
-  nameInputRef.value = item.name ?? '';
-  timeInputRef.value = item.notificationTime ?? 1000;
+chrome.storage.local.get(['timeOption'], (res) => {
+  timeOptionRef.value = res.timeOption ?? 25;
 });
