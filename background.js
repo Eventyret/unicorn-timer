@@ -8,7 +8,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
       if (res.isRunning) {
         let timer = res.timer + 1;
         let isRunning = true;
-        if (timer === 10) {
+        if (timer === 60 * 25) {
           this.registration.showNotification('Unicorn Timer', {
             body: '25 minutes have now passed!',
             icon: 'assets/images/icon.png'
