@@ -88,7 +88,6 @@ const renderTasks = () => {
 
 const updateTime = () => {
   chrome.storage.local.get(['timer'], (res) => {
-    res.timer = 60 * 24;
     const minutes = `${25 - Math.ceil(res.timer / 60)}`.padStart(2, '0');
     let seconds = '00';
     if (res.timer % 60 !== 0) {
