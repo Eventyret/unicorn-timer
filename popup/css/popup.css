@@ -1,0 +1,13 @@
+html {
+  font-size: 62.5%;
+}
+body {
+  height: 40rem;
+  width: 30rem;
+  font-size: 1.6rem;
+}
+.header {
+  display: flex;
+  justify-content: center;
+  height: 4rem;
+}
